@@ -1,9 +1,18 @@
+import os
 from O365 import Account
 from flask import Flask, redirect, request
 from flask_classful import FlaskView, route
 import yaml
-
 # import logging
+
+# This is necessary for testing with non-HTTPS localhost
+# Remove this if deploying to production
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+
+# This is necessary because Azure does not guarantee
+# to return scopes in the same case and order as requested
+os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = '1'
+os.environ['OAUTHLIB_IGNORE_SCOPE_CHANGE'] = '1'
 
 # Load the oauth_settings.yml file
 stream = open('oauth_settings.yml', 'r')
@@ -20,7 +29,7 @@ app = Flask(__name__)
 
 class LoginApp(FlaskView):
     account = Account(credentials, tenant_id=tenant_id)
-    callback = "https://127.0.0.1:8000/steptwo"
+    callback = "http://localhost:8000/steptwo"
     state = ''
 
     @route('/stepone')
@@ -57,7 +66,8 @@ LoginApp.register(app, route_base='/')
 
 account = LoginApp.account
 if not account.is_authenticated:
-    app.run(host='127.0.0.1', ssl_context='adhoc', port=8000)
+    #ssl_context='adhoc',
+    app.run(port=8000)
 
 # Scopes
 # 'basic' adds: 'offline_access' and 'https://graph.microsoft.com/User.Read'
