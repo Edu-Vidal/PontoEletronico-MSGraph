@@ -5,7 +5,7 @@ from flask_classful import FlaskView, route
 import yaml
 # import logging
 
-# This is necessary for testing with non-HTTPS localhost
+# This is necessary for non-HTTPS localhost
 # Remove this if deploying to production
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
@@ -32,6 +32,7 @@ class LoginApp(FlaskView):
     callback = "http://localhost:8000/steptwo"
     state = ''
 
+    @route('/')
     @route('/stepone')
     def auth_step_one(self):
         url, self.state = self.account.con.get_authorization_url(
@@ -60,13 +61,13 @@ class LoginApp(FlaskView):
         func()
 
 
+LoginApp.register(app, route_base='/')
+
 # the default protocol will be Microsoft Graph
 # the default authentication method will be "on behalf of a user"
-LoginApp.register(app, route_base='/')
 
 account = LoginApp.account
 if not account.is_authenticated:
-    #ssl_context='adhoc',
     app.run(port=8000)
 
 # Scopes
