@@ -4,7 +4,6 @@ from PyQt5.QtWidgets import QApplication, QSystemTrayIcon, QMenu, QAction
 import webbrowser
 
 from .tkinterGUI import GUI
-from .setupGUI import SetupApp
 
 
 class TaskBarApp():
@@ -12,16 +11,16 @@ class TaskBarApp():
         self.trayApp = QApplication([])
         self.trayApp.setQuitOnLastWindowClosed(False)
         self.guiApp = False
-        
+
         # Adicionando ícone
         icon = QIcon(os.path.join("resources", "ico_abla.png"))
-        
+
         # Adicionando para taskbar
         self.tray = QSystemTrayIcon(parent=self.trayApp)
         self.tray.setIcon(icon)
         self.tray.setVisible(True)
         self.tray.setToolTip('Ponto Eletrônico')
-        
+
         # Criando opções
         self.menu = QMenu()
 
@@ -29,11 +28,6 @@ class TaskBarApp():
         abrir = QAction('Abrir GUI')
         self.menu.addAction(abrir)
         abrir.triggered.connect(self.openGUI)
-
-        # Configurando app
-        configurar = QAction('Configuração')
-        self.menu.addAction(configurar)
-        configurar.triggered.connect(self.setupGUI)
 
         # Abrindo arquivo excel atual
         site = QAction('Abrir sharepoint')
@@ -46,20 +40,16 @@ class TaskBarApp():
         quit = QAction("Sair")
         quit.triggered.connect(self.end)
         self.menu.addAction(quit)
-        
+
         # Adicionando opções ao app na taskbar
         self.tray.setContextMenu(self.menu)
-
 
         self.trayApp.exec_()
 
     # Antes de abrir a GUI verifica as configurações do sistema
     def openGUI(self):
-        Setup()
+        # Setup()
         GUI()
-    
-    def setupGUI(self):
-        Setup()
 
     # Abre navegador na página dos documentos da empresa
     @staticmethod
