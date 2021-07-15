@@ -3,6 +3,9 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QApplication, QSystemTrayIcon, QMenu, QAction
 import webbrowser
 
+from backend.connection import Connection
+from backend.sharepoint import SharepointConnector
+from backend.manager import Manager
 from .tkinterGUI import GUI
 
 
@@ -44,12 +47,15 @@ class TaskBarApp():
         # Adicionando opções ao app na taskbar
         self.tray.setContextMenu(self.menu)
 
+        # Cria instância para conexão e utilização da API
+        # é possível selecionar os serviços a serem utilizados
+        self.manager = Manager(excel=True)
+
         self.trayApp.exec_()
 
-    # Antes de abrir a GUI verifica as configurações do sistema
+    # Abre GUI
     def openGUI(self):
-        # Setup()
-        GUI()
+        GUI(self.manager)
 
     # Abre navegador na página dos documentos da empresa
     @staticmethod

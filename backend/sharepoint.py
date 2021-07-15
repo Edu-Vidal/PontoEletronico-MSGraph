@@ -1,38 +1,41 @@
-from O365 import Account
-import yaml
+from backend.connection import Connection
 
 
-class SharepointConnector():
+class SharepointConnector(Connection):
     def __init__(self):
-        # Load the oauth_settings.yml file
-        stream = open('oauth_settings.yml', 'r')
-        settings = yaml.load(stream, yaml.SafeLoader)
-
-        scopes = settings['scopes'].split(' ')
-        client_id = settings['app_id']
-        client_secret = settings['app_secret']
-        tenant_id = settings['tenant_id']
-
-        credentials = (client_id, client_secret)
-
-        self.account = Account(credentials=credentials, scopes=scopes, tenant_id=tenant_id,
-                               main_resource="site:SNLV")
+        super().__init__()
 
         self.root_folder = None
-        self.excelFile = None
+        self.current_user = None
         self.name = None
-        self.connect()
 
-    def connect(self) -> None:
+        self.connectSharepoint()
+
+    # @Check.authentication
+    def connectSharepoint(self) -> None:
         # here we get the storage instance that handles all the storage options.
         # to create instance we need to point the correct sharepoint site, which,
         # in this case, is not root, so needs to be specified
         site = self.account.sharepoint().get_site('snlv.sharepoint.com', '/sites/SNLV')
         my_drive = site.get_default_document_library()
+
+        # Get instance of DriveItem for Sharepoint's root folder
         self.root_folder = my_drive.get_root_folder()
-        # Get file with timeclock data
-        self.excelFile = next(self.root_folder.search('Banco_de_Horas.xlsx'))
-        self.name = self.account.get_current_user()
+
+        # Get current user's Name instance
+        self.current_user = self.account.get_current_user()
+        self.name = self.current_user.display_name
+
+    # class Check:
+    #     @staticmethod
+    #     def sharepointConnection(func):
+    #         def wrapper(self, *args, **kwargs):
+    #             if self.autenticado:
+    #                 func(self, *args, **kwargs)
+    #             else:
+    #                 self.connectSharepoint()
+    #                 func(self, *args, **kwargs)
+    #         return wrapper
 
 
 # For tests
