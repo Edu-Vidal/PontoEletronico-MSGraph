@@ -1,44 +1,48 @@
-from openpyxl import load_workbook
-from unidecode import unidecode
+from O365.excel import WorkBook
 from datetime import datetime, time
+from backend.sharepoint import SharepointConnector
 
 
-class XlsxEditor():
-    
-    def __init__(self, xlsxFilePath):
-        self.xlsxFilePath = xlsxFilePath
-        # Abre o arquivo e recebe dicionário com todas as tabelas
-        self.wb = load_workbook(filename=xlsxFilePath)
+class XlsxEditor(SharepointConnector):
 
-    def rowFinder(self, nome):
-        now = datetime.now()
-        self.wb.active = self.wb.get_sheet_by_name(nome)
-        ws = self.wb.active
-        # Percorre linhas para encontrar dia de hoje
-        # Procura na coluna "B", onde estão as datas
-        for i in range(10, (ws.max_row)+1):
-            if ws.cell(row=i, column=2).value == datetime(now.year, now.month, now.day):
-                return i, ws
+    def __init__(self):
+        super().__init__()
+        # MUDAR --> Na estrutura de excel atual cada funcionário possui uma
+        # tabela em um só arquivo
+        wb = WorkBook(self.excelFile)
+        self.ws = wb.get_worksheet(self.name.display_name)
 
-    def insertData(self, nome, evento):
-        linha, ws = self.rowFinder(nome)
-        coluna = {'entrada': 3, 'inicio_intervalo': 4, 'fim_intervalo': 5, 'saida': 6}
+        self.now = datetime.now()
+        self.todaysRow = self.findTodaysRow()
 
-        ws.cell(row=linha, column=coluna[evento]).value = datetime.now().strftime("%H:%M:00")
-        self.writeExcel()
+    def createSheet(self) -> None:
+        # Caso não haja arquivo criado para o funcionário
+        pass
 
-        # Retorna dados preenchidos hoje
-        return [str(c.value)[:5] for c in ws[linha][2:6]]
+    def findTodaysRow(self) -> int:
+        today_s = self.now.strftime('%d/%m/%y')
+        # Retorna linha que representa o dia de hoje
+        # IMPLEMENTAR -> se ainda não existir é criada
+        rng = self.ws.get_range("B10:B1000")
+        # Garante receber toda a coluna -?-
+        datas = [data[0] for data in rng.text if data != ['']]
+        for data in datas:
+            if data == today_s:
+                return datas.index(data)+10
 
-    def writeExcel(self):
-        self.wb.save(self.xlsxFilePath)
+    def updateData(self, event):
+        # Parâmetros para inserção dos dados
+        column = {'entrada': "C", 'inicio_intervalo': "D",
+                  'fim_intervalo': "E", 'saida': "F"}
+        # Preenche dados para evento indicado
+        cell = self.ws.get_range(f'{column[event]}{self.todaysRow}')
+        cell.values = self.now.strftime("%H:%M")
+        cell.update()
+
+    def fetchTodaysData(self):
+        return [data for data in self.ws.get_range(f"C{self.todaysRow}:F{self.todaysRow}").text[0] if data != '']
 
 
 if __name__ == "__main__":
-    try:
-        dados = XlsxEditor('Eduardo', 'saida')
-        print(dados.atual)
-    except RuntimeError as e:
-        print(e)
-
-            
+    editor = XlsxEditor()
+    print(editor.fetchTodaysData())
