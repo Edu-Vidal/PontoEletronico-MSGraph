@@ -1,0 +1,101 @@
+{
+ "version": "auto-py-to-exe-configuration_v1",
+ "pyinstallerOptions": [
+  {
+   "optionDest": "noconfirm",
+   "value": true
+  },
+  {
+   "optionDest": "filenames",
+   "value": "C:/Users/Abla 02/Documents/Code/Projetos/SysTrayApp/main.pyw"
+  },
+  {
+   "optionDest": "onefile",
+   "value": false
+  },
+  {
+   "optionDest": "console",
+   "value": false
+  },
+  {
+   "optionDest": "icon_file",
+   "value": "C:/Users/Abla 02/Documents/Code/Projetos/abla.ico"
+  },
+  {
+   "optionDest": "name",
+   "value": "PontoEletronico"
+  },
+  {
+   "optionDest": "ascii",
+   "value": false
+  },
+  {
+   "optionDest": "clean_build",
+   "value": false
+  },
+  {
+   "optionDest": "loglevel",
+   "value": "WARN"
+  },
+  {
+   "optionDest": "debug",
+   "value": "bootloader"
+  },
+  {
+   "optionDest": "strip",
+   "value": false
+  },
+  {
+   "optionDest": "noupx",
+   "value": false
+  },
+  {
+   "optionDest": "uac_admin",
+   "value": false
+  },
+  {
+   "optionDest": "uac_uiaccess",
+   "value": false
+  },
+  {
+   "optionDest": "win_private_assemblies",
+   "value": false
+  },
+  {
+   "optionDest": "win_no_prefer_redirects",
+   "value": false
+  },
+  {
+   "optionDest": "bootloader_ignore_signals",
+   "value": false
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/Abla 02/Documents/Code/Projetos/SysTrayApp/oauth_settings.yml;."
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/Abla 02/Documents/Code/Projetos/SysTrayApp/backend;backend/"
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/Abla 02/Documents/Code/Projetos/SysTrayApp/resources;resources/"
+  },
+  {
+   "optionDest": "datas",
+   "value": "C:/Users/Abla 02/Documents/Code/Projetos/SysTrayApp/app;app/"
+  },
+  {
+   "optionDest": "pathex",
+   "value": "C:/Users/Abla 02/Documents/Code/Projetos/SysTrayApp/.venv/Lib/site-packages"
+  },
+  {
+   "optionDest": "pathex",
+   "value": "C:/Program Files (x86)/Windows Kits/10/Redist/10.0.19041.0/ucrt/DLLs/x64"
+  }
+ ],
+ "nonPyinstallerOptions": {
+  "increaseRecursionLimit": true,
+  "manualArguments": ""
+ }
+}

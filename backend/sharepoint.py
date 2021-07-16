@@ -3,7 +3,7 @@ from backend.connection import Connection
 
 class SharepointConnector(Connection):
     def __init__(self):
-        super().__init__()
+        Connection.authenticate()
 
         self.root_folder = None
         self.current_user = None
@@ -11,7 +11,6 @@ class SharepointConnector(Connection):
 
         self.connectSharepoint()
 
-    # @Check.authentication
     def connectSharepoint(self) -> None:
         # here we get the storage instance that handles all the storage options.
         # to create instance we need to point the correct sharepoint site, which,

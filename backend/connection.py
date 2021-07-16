@@ -21,14 +21,11 @@ class Connection:
 
     autenticado = True if account.is_authenticated else False
 
-    def __init__(self):
-        self.authenticate()
-
-    @Check.authentication
-    def authenticate(self):
-        if not self.autenticado:
-            Autenticador(self.account)
-            self.autenticado = True
+    @classmethod
+    def authenticate(cls):
+        if not cls.autenticado:
+            Autenticador(cls.account)
+            cls.autenticado = True
 
     class Check:
         @staticmethod
