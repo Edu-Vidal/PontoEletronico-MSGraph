@@ -1,2 +1,0 @@
-@echo off
-"C:/Users/Abla 02/Documents/Code/SysTrayApp/.venv/Scripts/activate.bat" && "C:/Users/Abla 02/Documents/Code/SysTrayApp/.venv/Scripts/pythonw.exe" "c:/Users/Abla 02/Desktop/Code/SysTrayApp/main.pyw"

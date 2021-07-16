@@ -2,5 +2,6 @@
 __pycache__
 .vscode
 .git
+PyQT
 
 o365_token.txt
