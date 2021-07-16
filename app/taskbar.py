@@ -58,9 +58,8 @@ class TaskBarApp():
         GUI(self.manager)
 
     # Abre navegador na página dos documentos da empresa
-    @staticmethod
-    def sharePoint(link='https://snlv.sharepoint.com/:f:/s/SNLV/Enh3zL6wzjtIuTnNidPYakIBFdCr6n3yPNXhYQQaoKWtkQ?e=sIWqnE'):
-        webbrowser.open_new_tab(link)
+    def sharePoint(self):
+        webbrowser.open_new_tab(self.manager.root_folder.web_url)
 
     def end(self):
         self.trayApp.quit()
