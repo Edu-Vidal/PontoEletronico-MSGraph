@@ -37,7 +37,7 @@ class TaskBarApp():
         self.menu.addAction(site)
         # Abre o site no navegador padrão, "new" configura a maneira como será aberto
         # "2" significa em uma nova aba
-        site.triggered.connect(self.sharePoint)
+        site.triggered.connect(lambda: self.sharePoint())
 
         # Finalizando App
         quit = QAction("Sair")
