@@ -1,4 +1,4 @@
-app_id: "78c56fcc-fe05-4b0e-8bfb-6c905b62f670"
-app_secret: "7XHg4d5_qZ7Uk-dbc3-CR-4zIAuZWY_9Q8"
+app_id: ""
+app_secret: ""
 scopes: "Files.ReadWrite.All offline_access user.read Sites.Manage.All"
-tenant_id: "f63aa350-de24-4f9f-872c-6658a017678a"
+tenant_id: ""
