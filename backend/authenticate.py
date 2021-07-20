@@ -47,6 +47,10 @@ class _WebAuth(FlaskView):
         else:
             return "<h3>Autenticação mal sucedida, cheque seus dados</h3>"
 
+    def checkBussinessAccount(self) -> bool:
+        # Verifica se conta inserida pertence a alguma empresa
+        pass
+
     def shutdown(self) -> None:
         func = request.environ.get('werkzeug.server.shutdown')
         if func is None:

@@ -65,6 +65,8 @@ class GUI():
     def updateInfo(self):
         if self.manager.autenticado:
             self.manager.excel.fetchTodaysData()
+            self.textWidget.replace(
+                '1.0', '1.34', self.manager.excel.todaysData)
         else:
             self.textWidget.replace('1.0', '1.34', 'Autentique-se')
 
